@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
+import Homepage from "./components/Homepage";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
 
           <Route
             path="/"
-            element = {<Navbar/>}
+            element = {<Homepage/>}
           />
         </Routes>
       </BrowserRouter>

@@ -1,24 +1,49 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
-const Navbar = () => {
-  const { user, logout } = useAuth();
+const Navbar = ({ isSticky }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between items-center bg-gray-100 shadow px-6 py-3">
-      {/* <h1 className="font-semibold">Dashboard</h1> */}
+    <nav
+      className={`w-full bg-white shadow-md transition-all duration-300 ${
+        isSticky ? "fixed top-0 left-0 z-50" : "relative"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
 
-      <div className="flex flex-row cursor-pointer" onClick={() => navigate("/")}>Road Sync</div>
-      <div className="flex items-end justify-end gap-4 w-screen bg-blend-color-dodge">
-        {/* <span>🔔</span> */}
-        <button className="cursor-pointer border-2 rounded-2xl px-2 py-1 hover:bg-gray-800 hover:px-2.5 hover:py-1.5 hover:text-white" onClick={() => navigate("/login")}>LogIn</button>
-        {/* <span>{user?.name}</span> */}
-        {/* <button onClick={logout} className="bg-red-500  text-white px-3 py-1 rounded">
-          Logout
-        </button> */}
+        {/* Logo */}
+        <div
+          className="font-bold text-[#0B3D91] text-lg cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          Road Sync
+        </div>
+
+        {/* Menu */}
+        <div className="flex items-center space-x-6 text-sm font-medium">
+
+          <Link to="/" className="hover:text-[#0B3D91]">
+            Home
+          </Link>
+
+          <Link to="/projects" className="hover:text-[#0B3D91]">
+            Projects
+          </Link>
+
+          <Link to="/dashboard" className="hover:text-[#0B3D91]">
+            Dashboard
+          </Link>
+
+          <button
+            onClick={() => navigate("/login")}
+            className="border-2 rounded-2xl px-4 py-1 hover:bg-gray-800 hover:text-white transition"
+          >
+            Login
+          </button>
+
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
