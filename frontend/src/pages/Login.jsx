@@ -7,7 +7,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/dashboard");
+    // navigate("/dashboard");
   };
 
   return (
@@ -63,7 +63,7 @@ const Login = () => {
               />
             </div>
 
-            <button className="w-full bg-[#0B3D91] text-white py-2 font-medium hover:bg-blue-900">
+            <button className="w-full bg-[#0B3D91] text-white py-2 font-medium hover:bg-blue-900" onClick={() => navigate("/")}>
               Authenticate
             </button>
 
