@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Homepage from "./components/Homepage";
+import DepartmentPage from "./pages/DepartmentPage";
 
 function App() {
   return (
@@ -15,8 +16,10 @@ function App() {
 
           <Route
             path="/"
-            element = {<Homepage/>}
+            element={<Homepage />}
           />
+          <Route path="/department/:deptName" element={<DepartmentPage />} />
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>
