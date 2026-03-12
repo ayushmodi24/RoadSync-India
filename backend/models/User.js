@@ -1,56 +1,48 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+const userSchema = new mongoose.Schema({
 
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-    },
-
-    password: {
-      type: String,
-      required: true,
-    },
-
-    role: {
-      type: String,
-      enum: ["Citizen", "Department", "Contractor", "Admin"],
-      default: "Citizen",
-    },
-
-    // Optional but useful for road safety system
-    phone: {
-      type: String,
-    },
-
-    location: {
-      type: String,  // City / Area
-    },
+  name: {
+    type: String,
+    required: true
   },
-  { timestamps: true }
-);
 
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
 
-userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return;
+  department: {
+    type: String,
+    required: true
+  },
 
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  // next();
-});
+  employeeId: {
+    type: String,
+    required: true
+  },
 
+  phone: {
+    type: String,
+    required: true
+  },
 
-userSchema.methods.comparePassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
+  password: {
+    type: String,
+    required: true
+  },
 
-module.exports = mongoose.model("User", userSchema);
+  role: {
+    type: String,
+    default: "officer"
+  },
+
+  status: {
+    type: String,
+    default: "pending"
+  }
+
+}, { timestamps: true });
+
+export default mongoose.model("User", userSchema);

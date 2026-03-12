@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
 
@@ -11,178 +11,147 @@ const Signup = () => {
     department: "",
     employeeId: "",
     phone: "",
-    password: "",
-    confirmPassword: "",
+    password: ""
   });
 
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
-    console.log(formData);
+
+    try {
+
+      const res = await fetch("http://localhost:5000/api/auth/signup", {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(formData)
+
+      });
+
+      const data = await res.json();
+
+      alert(data.message);
+
+      navigate("/login");
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
-      <div className="w-full max-w-2xl bg-white shadow-xl rounded-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
 
-        {/* Header */}
-        <div className="bg-[#0B3D91] text-white text-center py-4 rounded-t-lg">
-          <h1 className="text-2xl font-bold">RoadSync Portal</h1>
-          <p className="text-sm">Government Infrastructure Coordination System</p>
-        </div>
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+        <h2 className="text-2xl font-bold text-center mb-6">
+          RoadSync Signup
+        </h2>
 
-          <h2 className="text-xl font-semibold text-center text-gray-700">
-            Create Government Account
-          </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
 
-          {/* Name */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]"
-            />
-          </div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            required
+          />
 
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Official Email ID
-            </label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="example@gov.in"
-              className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#0B3D91]"
-            />
-          </div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Official Email"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            required
+          />
 
-          {/* Department */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Department
-            </label>
+          <select
+            name="department"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            required
+          >
 
-            <select
-              name="department"
-              required
-              value={formData.department}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#0B3D91]"
-            >
-              <option value="">Select Department</option>
-              <option>Road Cutting Department</option>
-              <option>Traffic Control Department</option>
-              <option>Municipal Corporation</option>
-              <option>Electricity Department</option>
-              <option>Water Supply Department</option>
-              <option>Urban Planning Department</option>
-            </select>
-          </div>
+            <option value="">Select Department</option>
+            <option>Water Department</option>
+            <option>Electricity Department</option>
+            <option>Traffic Department</option>
+            <option>Municipal Corporation</option>
 
-          {/* Employee ID */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Government Employee ID
-            </label>
-            <input
-              type="text"
-              name="employeeId"
-              required
-              value={formData.employeeId}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#0B3D91]"
-            />
-          </div>
+          </select>
 
-          {/* Phone */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Mobile Number
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              required
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#0B3D91]"
-            />
-          </div>
+          <input
+            type="text"
+            name="employeeId"
+            placeholder="Employee ID"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            required
+          />
 
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#0B3D91]"
-            />
-          </div>
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone Number"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            required
+          />
 
-          {/* Confirm Password */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              required
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#0B3D91]"
-            />
-          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            required
+          />
 
-          {/* Button */}
           <button
             type="submit"
-            className="w-full bg-[#FF6B00] text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition"
+            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
           >
-            Create Account
+            Signup
           </button>
-
-          {/* Login Link */}
-          <p className="text-center text-sm text-gray-600">
-            Already registered?{" "}
-            <Link
-              to="/login"
-              className="text-[#0B3D91] font-medium hover:underline"
-            >
-              Login Here
-            </Link>
-          </p>
 
         </form>
 
+        <p className="text-center mt-4">
+
+          Already have an account?{" "}
+
+          <Link to="/login" className="text-blue-600">
+            Login
+          </Link>
+
+        </p>
+
       </div>
+
     </div>
+
   );
+
 };
 
 export default Signup;

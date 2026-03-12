@@ -11,102 +11,109 @@ const Login = () => {
   });
 
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    console.log(formData);
+    try {
 
-    // after login success
-    navigate("/dashboard");
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(formData)
+
+      });
+
+      const data = await res.json();
+
+      if (data.token) {
+
+        localStorage.setItem("token", data.token);
+
+        navigate("/dashboard");
+
+      } else {
+
+        alert(data.message);
+
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
-      <div className="w-full max-w-md bg-white shadow-xl rounded-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
 
-        {/* Header */}
-        <div className="bg-[#0B3D91] text-white text-center py-4 rounded-t-lg">
-          <h1 className="text-2xl font-bold">RoadSync Portal</h1>
-          <p className="text-sm">
-            Government Infrastructure Coordination System
-          </p>
-        </div>
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+        <h2 className="text-2xl font-bold text-center mb-6">
+          RoadSync Login
+        </h2>
 
-          <h2 className="text-xl font-semibold text-center text-gray-700">
-            Government User Login
-          </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
 
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Official Email ID
-            </label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="example@gov.in"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]"
-            />
-          </div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Official Email"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            required
+          />
 
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]"
-            />
-          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            required
+          />
 
-          {/* Login Button */}
           <button
             type="submit"
-            className="w-full bg-[#FF6B00] text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition"
+            className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700"
           >
             Login
           </button>
 
-          {/* Extra Links */}
-          <div className="flex justify-between text-sm text-gray-600">
-            <Link
-              to="/signup"
-              className="text-[#0B3D91] hover:underline"
-            >
-              Create Account
-            </Link>
-
-            <Link
-              to="/forgot-password"
-              className="text-[#0B3D91] hover:underline"
-            >
-              Forgot Password?
-            </Link>
-          </div>
-
         </form>
 
+        <p className="text-center mt-4">
+
+          Don't have an account?{" "}
+
+          <Link to="/signup" className="text-blue-600">
+            Signup
+          </Link>
+
+        </p>
+
       </div>
+
     </div>
+
   );
+
 };
 
 export default Login;
