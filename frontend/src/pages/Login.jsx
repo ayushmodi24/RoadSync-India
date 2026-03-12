@@ -42,8 +42,17 @@ const Login = () => {
       if (data.token) {
 
         localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role);
 
-        navigate("/dashboard");
+        if (data.role === "admin") {
+
+          navigate("/admin");
+
+        } else {
+
+          navigate("/");
+
+        }
 
       } else {
 
@@ -91,7 +100,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700"
+            className="w-full bg-green-600 text-white p-2 rounded"
           >
             Login
           </button>

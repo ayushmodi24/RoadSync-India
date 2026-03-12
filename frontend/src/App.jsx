@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Navbar from "./components/Navbar";
+// import AdminDashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+// import ProtectedRoute from "./components/ProtectedRoute";
+// import Navbar from "./components/Navbar";
 import Homepage from "./components/Homepage";
 import DepartmentPage from "./pages/DepartmentPage";
 import Signup from "./pages/SignUp";
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/admin" element={<AdminDashboard />} />
 
           <Route
             path="/"

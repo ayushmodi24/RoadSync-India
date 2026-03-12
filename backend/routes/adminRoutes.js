@@ -1,35 +1,61 @@
-const express = require("express");
-const User = require("../models/User");
-const { verifyToken, checkRole } = require("../middleware/authMiddleware");
+import express from "express";
+import User from "../models/User.js";
 
 const router = express.Router();
 
-// ✅ Admin Assign Role
-router.put(
-  "/assign-role/:userId",
-  verifyToken,
-  checkRole(["Admin"]),
-  async (req, res) => {
-    try {
-      const { role } = req.body;
+/* GET PENDING USERS */
+router.get("/pending", async (req, res) => {
 
-      const allowedRoles = ["Citizen", "Department", "Contractor", "Admin"];
+  try {
 
-      if (!allowedRoles.includes(role)) {
-        return res.status(400).json({ message: "Invalid role" });
-      }
+    const users = await User.find({ status: "pending" });
 
-      const updatedUser = await User.findByIdAndUpdate(
-        req.params.userId,
-        { role },
-        { new: true }
-      );
+    res.json(users);
 
-      res.json(updatedUser);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
+  } catch (error) {
+
+    res.status(500).json({ message: "Server error" });
+
   }
-);
 
-module.exports = router;
+});
+
+/* APPROVE USER */
+router.put("/approve/:id", async (req, res) => {
+
+  try {
+
+    await User.findByIdAndUpdate(req.params.id, {
+      status: "approved"
+    });
+
+    res.json({ message: "User approved" });
+
+  } catch (error) {
+
+    res.status(500).json({ message: "Server error" });
+
+  }
+
+});
+
+/* REJECT USER */
+router.put("/reject/:id", async (req, res) => {
+
+  try {
+
+    await User.findByIdAndUpdate(req.params.id, {
+      status: "rejected"
+    });
+
+    res.json({ message: "User rejected" });
+
+  } catch (error) {
+
+    res.status(500).json({ message: "Server error" });
+
+  }
+
+});
+
+export default router;

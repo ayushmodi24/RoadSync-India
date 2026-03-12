@@ -35,11 +35,12 @@ const userSchema = new mongoose.Schema({
 
   role: {
     type: String,
-    default: "officer"
+    default: "user"
   },
 
   status: {
     type: String,
+    enum: ["pending", "approved", "rejected"],
     default: "pending"
   }
 

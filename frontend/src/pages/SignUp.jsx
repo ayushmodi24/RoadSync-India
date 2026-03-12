@@ -91,13 +91,11 @@ const Signup = () => {
             onChange={handleChange}
             required
           >
-
             <option value="">Select Department</option>
             <option>Water Department</option>
             <option>Electricity Department</option>
             <option>Traffic Department</option>
             <option>Municipal Corporation</option>
-
           </select>
 
           <input
@@ -129,7 +127,7 @@ const Signup = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+            className="w-full bg-blue-600 text-white p-2 rounded"
           >
             Signup
           </button>

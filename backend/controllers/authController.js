@@ -54,11 +54,9 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    if (user.status !== "approved") {
-      return res.status(403).json({
-        message: "Account not approved by admin"
-      });
-    }
+     if (user.status !== "approved") {
+    return res.json({ message: "Waiting for admin approval" });
+  }
 
     const match = await bcrypt.compare(password, user.password);
 
@@ -73,8 +71,8 @@ export const login = async (req, res) => {
     );
 
     res.json({
-      token,
-      user
+      token
+      // role: user.role
     });
 
   } catch (error) {
