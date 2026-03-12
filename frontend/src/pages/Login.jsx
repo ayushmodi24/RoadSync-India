@@ -1,92 +1,110 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // navigate("/dashboard");
+
+    console.log(formData);
+
+    // after login success
+    navigate("/dashboard");
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-6xl mx-auto px-6 py-5">
-          <h1 className="text-2xl font-bold text-gray-800">
-            Smart Road Coordination & Monitoring Portal
-          </h1>
-          <p className="text-sm text-gray-600">
-            Secure Infrastructure Governance Platform
+      <div className="w-full max-w-md bg-white shadow-xl rounded-lg">
+
+        {/* Header */}
+        <div className="bg-[#0B3D91] text-white text-center py-4 rounded-t-lg">
+          <h1 className="text-2xl font-bold">RoadSync Portal</h1>
+          <p className="text-sm">
+            Government Infrastructure Coordination System
           </p>
         </div>
-      </header>
 
-      {/* Login Card */}
-      <div className="flex flex-1 items-center justify-center px-4">
-        <div className="bg-white shadow-xl border-t-4 border-[#0B3D91] p-8 w-full max-w-md">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-8 space-y-6">
 
-          <h2 className="text-lg font-semibold text-gray-800 text-center mb-6">
-            Secure Authorized Access
+          <h2 className="text-xl font-semibold text-center text-gray-700">
+            Government User Login
           </h2>
 
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 text-sm p-3 mb-4">
-              {error}
-            </div>
-          )}
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Official Email ID
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="example@gov.in"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]"
+            />
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]"
+            />
+          </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Official Email Address
-              </label>
-              <input
-                type="email"
-                className="w-full border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]"
-                placeholder="Enter official email"
-              />
-            </div>
+          {/* Login Button */}
+          <button
+            type="submit"
+            className="w-full bg-[#FF6B00] text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition"
+          >
+            Login
+          </button>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                className="w-full border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0B3D91]"
-                placeholder="Enter password"
-              />
-            </div>
+          {/* Extra Links */}
+          <div className="flex justify-between text-sm text-gray-600">
+            <Link
+              to="/signup"
+              className="text-[#0B3D91] hover:underline"
+            >
+              Create Account
+            </Link>
 
-            <button className="w-full bg-[#0B3D91] text-white py-2 font-medium hover:bg-blue-900" onClick={() => navigate("/")}>
-              Authenticate
-            </button>
-
-          </form>
-
-          <div className="text-sm text-center mt-6">
-            <span className="text-gray-600">New user?</span>{" "}
-            <Link to="/register" className="text-[#0B3D91] font-medium">
-              Submit Registration Request
+            <Link
+              to="/forgot-password"
+              className="text-[#0B3D91] hover:underline"
+            >
+              Forgot Password?
             </Link>
           </div>
 
-          <div className="mt-6 text-xs text-gray-600 border-t pt-4 text-center">
-            This system is restricted to authorized personnel only.
-          </div>
+        </form>
 
-        </div>
       </div>
-
-      <footer className="text-center text-xs text-gray-600 py-4 border-t bg-white">
-        © 2026 Smart Road Coordination & Monitoring Portal
-      </footer>
-
     </div>
   );
 };

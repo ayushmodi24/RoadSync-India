@@ -90,6 +90,12 @@ const Navbar = ({ isSticky }) => {
           >
             Login
           </button>
+          <button
+            onClick={() => navigate("/signup")}
+            className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            SignUp
+          </button>
         </div>
       </div>
     </nav>
