@@ -56,9 +56,8 @@ const Navbar = ({ isSticky }) => {
 
   return (
     <nav
-      className={`w-full bg-[#0B3D91] text-white shadow-md transition-all duration-300 ${
-        isSticky ? "fixed top-0 left-0 z-50" : "relative"
-      }`}
+      className={`w-full bg-[#0B3D91] text-white shadow-md transition-all duration-300 ${isSticky ? "fixed top-0 left-0 z-50" : "relative"
+        }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
@@ -67,7 +66,7 @@ const Navbar = ({ isSticky }) => {
           className="text-2xl font-bold cursor-pointer tracking-wide"
           onClick={() => navigate("/")}
         >
-          🚦 RoadSync
+          RoadSync
         </div>
 
         {/* Menu */}
