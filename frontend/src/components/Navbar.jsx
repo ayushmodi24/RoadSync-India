@@ -48,16 +48,24 @@
 // };
 
 // export default Navbar;
-
 import { useNavigate, Link } from "react-router-dom";
 
 const Navbar = ({ isSticky }) => {
   const navigate = useNavigate();
 
+  // Check login status
+  const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <nav
-      className={`w-full bg-[#0B3D91] text-white shadow-md transition-all duration-300 ${isSticky ? "fixed top-0 left-0 z-50" : "relative"
-        }`}
+      className={`w-full bg-[#0B3D91] text-white shadow-md transition-all duration-300 ${
+        isSticky ? "fixed top-0 left-0 z-50" : "relative"
+      }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
@@ -71,6 +79,7 @@ const Navbar = ({ isSticky }) => {
 
         {/* Menu */}
         <div className="flex items-center space-x-8 text-sm font-medium">
+
           <Link to="/" className="hover:text-gray-300 transition">
             Home
           </Link>
@@ -79,22 +88,36 @@ const Navbar = ({ isSticky }) => {
             Projects
           </Link>
 
-          <Link to="/dashboard" className="hover:text-gray-300 transition">
-            Dashboard
-          </Link>
+          {token && (
+            <Link to="/dashboard" className="hover:text-gray-300 transition">
+              Dashboard
+            </Link>
+          )}
 
-          <button
-            onClick={() => navigate("/login")}
-            className="bg-[#FF6B00] px-4 py-2 rounded-lg hover:bg-orange-600 transition"
-          >
-            Login
-          </button>
-          <button
-            onClick={() => navigate("/signup")}
-            className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-          >
-            SignUp
-          </button>
+          {!token ? (
+            <>
+              <button
+                onClick={() => navigate("/login")}
+                className="bg-[#FF6B00] px-4 py-2 rounded-lg hover:bg-orange-600 transition"
+              >
+                Login
+              </button>
+
+              <button
+                onClick={() => navigate("/signup")}
+                className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+              >
+                SignUp
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 transition"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>
