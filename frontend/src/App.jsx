@@ -9,6 +9,7 @@ import DepartmentDashboard from "./pages/DepartmentDashboard";
 import Homepage from "./components/Homepage";
 import DepartmentPage from "./pages/DepartmentPage";
 import Signup from "./pages/SignUp";
+import Projects from "./pages/Projects";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/dashboard" element={<DepartmentDashboard />} />
+          <Route path="/projects" element={<Projects />} />
 
           <Route
             path="/"
